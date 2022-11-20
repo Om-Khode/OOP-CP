@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/AmazonS3WithJava-master.iml" filepath="$PROJECT_DIR$/.idea/AmazonS3WithJava-master.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AmazonS3WithJava-master/com.iml" filepath="$PROJECT_DIR$/AmazonS3WithJava-master/com.iml" />
+    </modules>
+  </component>
+</project>
