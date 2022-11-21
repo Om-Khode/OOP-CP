@@ -35,13 +35,8 @@ public class EntryPoint {
 	public static void SaveToCloud(String bucketName, String FolderName, String filePath) {
 
 		CommonService commonService = new CommonService();
-		// credentials object identifying user for authentication
-		// user must have AWSConnector and AmazonS3FullAccess for
-		// this example to work
-		AWSCredentials credentials = new BasicAWSCredentials(CommonConstants.ACCESS_KEY_ID,CommonConstants.ACCESS_SEC_KEY);
 
-		// create a client connection based on credentials
-		//AmazonS3 s3client = new AmazonS3Client(credentials);
+		AWSCredentials credentials = new BasicAWSCredentials(CommonConstants.ACCESS_KEY_ID,CommonConstants.ACCESS_SEC_KEY);
 
 		AmazonS3 s3client = AmazonS3ClientBuilder
 				  .standard()
@@ -49,48 +44,27 @@ public class EntryPoint {
 				  .withRegion(Regions.AP_SOUTH_1)
 				  .build();
 
-		// create bucket - name must be unique for all S3 users
-//		String bucketName = CommonConstants.BUCKET_NAME;
 		String cbucketName = bucketName;
 
-//		s3client.createBucket(bucketName);
-
-		// create folder into bucket
 		String cfolderName = FolderName;
-//		CommonService.createFolder(bucketName, folderName, s3client,CommonConstants.SUFFIX);
 
-		// upload file to folder and set it to public
-//		String fileName = folderName + CommonConstants.SUFFIX + CommonConstants.FILE_NAME;
 		String cfileName = cfolderName + CommonConstants.SUFFIX + CommonConstants.FILE_NAME;
 
 		s3client.putObject(
-//				new PutObjectRequest(bucketName, fileName, new File(CommonConstants.FILE_PATH))
 				new PutObjectRequest(cbucketName, cfileName, new File(filePath))
 
 				.withCannedAcl(CannedAccessControlList.PublicRead));
 
 		System.out.println("Execution Completed");
 
-		commonService.getObj(s3client);
-
-//		CommonService.deleteFolder(bucketName, folderName, s3client);
-
-		// deletes bucket
-//		s3client.deleteBucket(bucketName);
 	}
 
 	static AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(Regions.AP_SOUTH_1).build();
 
 	public static boolean downloadFile(String bucketName, String objectName, String dirname)
 	{
-		CommonService commonService = new CommonService();
-		// credentials object identifying user for authentication
-		// user must have AWSConnector and AmazonS3FullAccess for
-		// this example to work
-		AWSCredentials credentials = new BasicAWSCredentials(CommonConstants.ACCESS_KEY_ID,CommonConstants.ACCESS_SEC_KEY);
 
-		// create a client connection based on credentials
-		//AmazonS3 s3client = new AmazonS3Client(credentials);
+		AWSCredentials credentials = new BasicAWSCredentials(CommonConstants.ACCESS_KEY_ID,CommonConstants.ACCESS_SEC_KEY);
 
 		AmazonS3 s3 = AmazonS3ClientBuilder
 				.standard()

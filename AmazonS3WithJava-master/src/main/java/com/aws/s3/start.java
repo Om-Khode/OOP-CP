@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class start {
 	static boolean flag=true, doesItExists=false,doesItExistsFolder=false;
-	static String filename="",dirname="",key="",delfile="",bucketName="",folderName="",objectName="";
+	static String filename="",dirname="",key="",delfile="",bucketName="",objectName="",folderName="";
 	static int chk=0,ch=0;
 	//static byte [] bkey;
  
@@ -27,26 +27,17 @@ public class start {
 		 switch(ch)
 		  {
 
-//		  	case 6 :
-//				System.out.println("Enter the Name of Bucket : ");
-//				bucketName = chscanner.next();
-//				System.out.println("Enter the Name of Object : ");
-//				objectName = chscanner.next();
-//				System.out.println(EntryPoint.CheckFile(bucketName, objectName));
-//				break;
-
 		    case 1:
 //				EntryPoint.downloadFile();
 
 		    	do {
 		    	System.out.println("Enter Name of the File to be Encrypted(include path if outside):");
 				filename=chscanner.next();
-				filename=filename.replaceAll("\\\\", "/");		//for windows dir scheme
+				filename=filename.replaceAll("\\\\", "/");
 				chk=FunctionSet.check(filename);
 				}while(chk!=1);
 
 				do {
-//				System.out.println("Enter Name of Directory to store Encrypted file:");
 				System.out.println("Enter Name of Directory to store key file:");
 				dirname=chscanner.next();
 //				dirname= CommonConstants.LOCAL_DOWNLOAD_PATH;
@@ -57,8 +48,10 @@ public class start {
 				do{
 					System.out.println("Enter the Name of Bucket where you want to store the Encrypted File : ");
 					bucketName = chscanner.next();
-					System.out.println("Enter the Name of folder where you want to store the Encrypted File : ");
+//					bucketName = CommonConstants.BUCKET_NAME;
+					System.out.println("Enter the Name of Object where you want to store the Encrypted File : ");
 					folderName = chscanner.next();
+//					objectName = CommonConstants.FOLDER_NAME;
 					System.out.println(EntryPoint.checkFolder(bucketName, folderName));
 					doesItExistsFolder = EntryPoint.checkFolder(bucketName, folderName);
 				}while(!doesItExistsFolder);
@@ -71,12 +64,10 @@ public class start {
 				}while(key.length()<10);
 
 				key=FunctionSet.KeyGen(key);
-				//bkey=key.getBytes(Charset.defaultCharset());  //array of bytes of key
-				//key=RsaFunctionClass.StrToBytes(key);	//get the string of bytes
 
-				BigInteger m=new BigInteger(key);	//convert to BI
-				BigInteger Enkey= RsaFunctionClass.EncDec(m, RsaFunctionClass.e, RsaFunctionClass.n);	//RSA-Encrypt the key
-				String keyloc= RsaFunctionClass.WriteEncKey(Enkey, dirname, filename);	//write encrypted key to file for further use
+				BigInteger m=new BigInteger(key);
+				BigInteger Enkey= RsaFunctionClass.EncDec(m, RsaFunctionClass.e, RsaFunctionClass.n);
+				String keyloc= RsaFunctionClass.WriteEncKey(Enkey, dirname, filename);
 
 				obj.encrypt(filename,dirname,key);
 
@@ -96,8 +87,10 @@ public class start {
 				do{
 					System.out.println("Enter the Name of Bucket where the Encrypted File Exists : ");
 					bucketName = chscanner.next();
+//					bucketName = CommonConstants.BUCKET_NAME;
 					System.out.println("Enter the Name of Object where the Encrypted File Exists : ");
 					objectName = chscanner.next();
+//					objectName = CommonConstants.BUCKET_FILE_PATH;
 					System.out.println(EntryPoint.CheckFile(bucketName, objectName));
 					doesItExists = EntryPoint.CheckFile(bucketName, objectName);
 				}while(!doesItExists);
@@ -109,7 +102,7 @@ public class start {
 					chk=FunctionSet.check(dirname);
 				}while(chk!=2);
 
-				EntryPoint.downloadFile(bucketName,objectName, dirname);
+//				EntryPoint.downloadFile(bucketName,objectName, dirname);
 
 //				do
 //				{
@@ -148,8 +141,6 @@ public class start {
 				filename = dirname + CommonConstants.SUFFIX + CommonConstants.FILE_NAME;
 
 				obj.decrypt(filename,extname,dirname,key);
-
-//				FunctionSet.delencf(filename,1);
 				
 				System.out.println("\nFile DECRYPTED Successfully as 'dec."+extname+",' Stored at "+"'"+dirname+"'");
 	    		break;
